@@ -5,9 +5,13 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 import os
 import json
+from nlp_analyzer import ScamTextAnalyzer
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
+
+# Initialize NLP analyzer
+nlp_analyzer = ScamTextAnalyzer()
 
 # Load models
 def load_models():
@@ -51,6 +55,10 @@ def job_detection():
 @app.route('/internship-detection')
 def internship_detection():
     return render_template('internship_detection.html')
+
+@app.route('/text-analyzer')
+def text_analyzer():
+    return render_template('text_analyzer.html')
 
 @app.route('/api/predict-job', methods=['POST'])
 def predict_job():
@@ -242,6 +250,8 @@ def predict_internship():
                 'confidence': float(max(prob) * 100)
             }
         
+        print(f"Internship predictions: {predictions}")
+        
         # Ensemble decision (majority vote with confidence tracking)
         fraudulent_votes = 0
         total_confidence = 0
@@ -261,7 +271,7 @@ def predict_internship():
             ensemble_prediction = 'Real'
             ensemble_confidence = 50.0
         
-        return jsonify({
+        result = {
             'success': True,
             'predictions': predictions,
             'ensemble_result': ensemble_prediction,
@@ -271,7 +281,42 @@ def predict_internship():
                 'real_votes': vote_count - fraudulent_votes,
                 'total_models': vote_count
             }
-        })
+        }
+        
+        print(f"Returning internship result: {result}")
+        return jsonify(result)
+    
+    except Exception as e:
+        print(f"ERROR in internship prediction: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 400
+
+@app.route('/api/analyze-text', methods=['POST'])
+def analyze_text():
+    """Analyze job/internship text for scam indicators using NLP"""
+    try:
+        data = request.json
+        text = data.get('text', '')
+        analysis_type = data.get('type', 'job')  # 'job' or 'internship'
+        
+        if not text:
+            return jsonify({
+                'success': False,
+                'error': 'No text provided'
+            }), 400
+        
+        # Analyze text using NLP
+        analysis_result = nlp_analyzer.analyze_text(text)
+        
+        # Add analysis type
+        analysis_result['analysis_type'] = analysis_type
+        analysis_result['success'] = True
+        
+        return jsonify(analysis_result)
     
     except Exception as e:
         return jsonify({
@@ -279,11 +324,144 @@ def predict_internship():
             'error': str(e)
         }), 400
 
+@app.route('/api/comprehensive-analysis', methods=['POST'])
+def comprehensive_analysis():
+    """
+    Comprehensive analysis combining NLP text analysis and ML model predictions
+    """
+    try:
+        data = request.json
+        text = data.get('text', '')
+        analysis_type = data.get('type', 'job')
+        
+        if not text:
+            return jsonify({
+                'success': False,
+                'error': 'No text provided'
+            }), 400
+        
+        # Step 1: NLP Text Analysis
+        text_analysis = nlp_analyzer.analyze_text(text)
+        
+        # Step 2: Extract features from text analysis
+        nlp_features = text_analysis['features']
+        
+        # Step 3: Combine with form data if provided
+        features_dict = data.get('features', {})
+        
+        # Calculate final risk score
+        nlp_risk = text_analysis['risk_score']
+        
+        # If ML features are provided, combine with NLP analysis
+        ml_predictions = None
+        ensemble_risk = nlp_risk
+        
+        if features_dict and analysis_type == 'job':
+            # Get ML model predictions for jobs
+            try:
+                features = np.array([[
+                    features_dict.get('salary_min', 0),
+                    features_dict.get('salary_max', 0),
+                    features_dict.get('company_experience_years', 0),
+                    features_dict.get('job_description_length', len(text)),
+                    features_dict.get('required_experience_years', 0),
+                    features_dict.get('required_education_level', 2),
+                    features_dict.get('telecommute_allowed', 0),
+                    features_dict.get('has_company_logo', 1)
+                ]])
+                
+                if 'job_scaler' in models:
+                    features = models['job_scaler'].transform(features)
+                    
+                    ml_predictions = {}
+                    fraud_votes = 0
+                    total_models = 0
+                    
+                    for model_name in ['job_xgboost', 'job_catboost', 'job_random_forest']:
+                        if model_name in models:
+                            pred = models[model_name].predict(features)[0]
+                            prob = models[model_name].predict_proba(features)[0]
+                            ml_predictions[model_name.replace('job_', '')] = {
+                                'prediction': 'Fraudulent' if pred == 1 else 'Genuine',
+                                'confidence': float(max(prob) * 100)
+                            }
+                            if pred == 1:
+                                fraud_votes += 1
+                            total_models += 1
+                    
+                    # Calculate ML risk score
+                    ml_risk = (fraud_votes / total_models) * 100 if total_models > 0 else 50
+                    
+                    # Combine NLP and ML risk (weighted average)
+                    ensemble_risk = (nlp_risk * 0.6) + (ml_risk * 0.4)
+            except Exception as ml_error:
+                print(f"ML prediction error: {ml_error}")
+        
+        # Determine final category based on ensemble risk
+        if ensemble_risk >= 70:
+            final_category = 'Fake'
+            alert_level = 'danger'
+        elif ensemble_risk >= 40:
+            final_category = 'Suspicious'
+            alert_level = 'warning'
+        else:
+            final_category = 'Genuine'
+            alert_level = 'success'
+        
+        return jsonify({
+            'success': True,
+            'nlp_analysis': text_analysis,
+            'ml_predictions': ml_predictions,
+            'ensemble_risk_score': round(ensemble_risk, 1),
+            'final_category': final_category,
+            'alert_level': alert_level,
+            'recommendation': _generate_recommendation(final_category, ensemble_risk)
+        })
+    
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 400
+
 @app.route('/api/health', methods=['GET'])
+def _generate_recommendation(category, risk_score):
+    """Generate actionable recommendations based on analysis"""
+    recommendations = {
+        'Fake': [
+            '🚫 DO NOT proceed with this opportunity',
+            '🚫 DO NOT share personal information or make any payments',
+            '📞 Report this posting to the platform administrators',
+            '🔍 Search for similar scam reports online',
+            '⚠️ Block and avoid all communication with this poster'
+        ],
+        'Suspicious': [
+            '⚠️ Proceed with extreme caution',
+            '🔍 Verify company registration and legitimacy independently',
+            '📧 Confirm communication through official company channels',
+            '💳 Never make upfront payments',
+            '👥 Research company reviews and employee feedback online',
+            '🤝 Request detailed written contract before proceeding'
+        ],
+        'Genuine': [
+            '✅ Posting appears legitimate',
+            '🔍 Still verify company details as standard practice',
+            '📝 Review employment terms carefully',
+            '💼 Confirm role and responsibilities in writing',
+            '🤝 Professional communication through official channels only'
+        ]
+    }
+    
+    return recommendations.get(category, [])
+
+@app.route('/api/health')
 def health():
     return jsonify({
         'status': 'healthy',
-        'models_loaded': len(models) > 0
+        'models_loaded': len(models) > 0,
+        'nlp_analyzer': 'active'
     })
 
 @app.errorhandler(404)
