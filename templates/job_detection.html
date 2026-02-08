@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Analysis | AI Scam Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cyber_style.css') }}">
+</head>
+<body>
+    <!-- Floating Orbs Background -->
+    <div class="floating-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+        <div class="orb orb-5"></div>
+    </div>
+    
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="nav-brand">🛡️ Scam Guardian</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/text-analyzer">Text Analyzer</a></li>
+                <li><a href="/job-detection" class="active">Job Analysis</a></li>
+                <li><a href="/internship-detection">Internship Analysis</a></li>
+            </ul>
+            <div style="position: relative;">
+                <button class="theme-toggle">
+                    <span class="theme-icon">🌙</span>
+                    <span class="theme-text">Dark</span>
+                </button>
+                <div class="theme-dropdown">
+                    <button class="theme-option active" data-theme="dark">🌙 Dark</button>
+                    <button class="theme-option" data-theme="light">☀️ Light</button>
+                    <button class="theme-option" data-theme="black">🌑 Black</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <span class="badge">📊 Job Analysis</span>
+            <h1>Job Verification</h1>
+            <p class="subtitle">Feature-based ML analysis</p>
+        </section>
+
+        <div class="card mt-4">
+            <form id="jobForm" method="post" action="javascript:void(0)">
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label class="form-label" for="salary_min">💵 Minimum Salary ($)</label>
+                        <input class="form-input" type="number" id="salary_min" name="salary_min" value="45000" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="salary_max">💰 Maximum Salary ($)</label>
+                        <input class="form-input" type="number" id="salary_max" name="salary_max" value="95000" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="company_experience_years">🏢 Company Age (Years)</label>
+                        <input class="form-input" type="number" id="company_experience_years" name="company_experience_years" value="12" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="required_experience_years">⏱️ Required Experience (Years)</label>
+                        <input class="form-input" type="number" id="required_experience_years" name="required_experience_years" value="3" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="job_description_length">📑 Description Length</label>
+                        <input class="form-input" type="number" id="job_description_length" name="job_description_length" value="1200" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="required_education_level">🎓 Education Required</label>
+                        <select class="form-select" id="required_education_level" name="required_education_level" required>
+                            <option value="1">High School</option>
+                            <option value="2" selected>Bachelor's Degree</option>
+                            <option value="3">Master's Degree</option>
+                            <option value="4">PhD</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="telecommute_allowed">🏠 Remote Work Allowed?</label>
+                        <select class="form-select" id="telecommute_allowed" name="telecommute_allowed" required>
+                            <option value="0">No</option>
+                            <option value="1">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="has_company_logo">🎨 Has Company Logo?</label>
+                        <select class="form-select" id="has_company_logo" name="has_company_logo" required>
+                            <option value="0">No</option>
+                            <option value="1" selected>Yes</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                    🤖 Run AI Analysis
+                </button>
+            </form>
+        </div>
+
+        <div id="loadingSpinner" class="hidden" style="text-align: center; margin: 2rem 0;">
+            <div class="loading"></div>
+            <p style="margin-top: 1rem; color: var(--text-secondary);">Consulting models...</p>
+        </div>
+
+        <div id="results" class="hidden">
+            <!-- Dynamic results -->
+        </div>
+
+        <section class="features-section">
+            <h2 class="section-title">ML Models (5)</h2>
+            <div class="grid grid-3">
+                <div class="card">
+                    <h3>XGBoost</h3>
+                    <p>Gradient boosting for speed</p>
+                </div>
+                <div class="card">
+                    <h3>CatBoost</h3>
+                    <p>Categorical feature handling</p>
+                </div>
+                <div class="card">
+                    <h3>Gradient Boosting</h3>
+                    <p>Sequential ensemble method</p>
+                </div>
+                <div class="card">
+                    <h3>Random Forest</h3>
+                    <p>Multiple decision trees</p>
+                </div>
+                <div class="card">
+                    <h3>Decision Tree</h3>
+                    <p>Interpretable decisions</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 AI Scam Detection | Ensemble Analysis</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/job_detection.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/theme-switcher.js') }}"></script>
+</body>
+</html>
