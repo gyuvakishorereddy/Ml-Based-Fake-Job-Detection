@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Analyzer | AI Scam Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cyber_style.css') }}">
+</head>
+<body>
+    <!-- Floating Orbs Background -->
+    <div class="floating-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+        <div class="orb orb-5"></div>
+    </div>
+    
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="nav-brand">🛡️ Scam Guardian</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/text-analyzer" class="active">Text Analyzer</a></li>
+                <li><a href="/job-detection">Job Analysis</a></li>
+                <li><a href="/internship-detection">Internship Analysis</a></li>
+            </ul>
+            <div style="position: relative;">
+                <button class="theme-toggle">
+                    <span class="theme-icon">🌙</span>
+                    <span class="theme-text">Dark</span>
+                </button>
+                <div class="theme-dropdown">
+                    <button class="theme-option active" data-theme="dark">🌙 Dark</button>
+                    <button class="theme-option" data-theme="light">☀️ Light</button>
+                    <button class="theme-option" data-theme="black">🌑 Black</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <span class="badge">🔍 NLP Analysis</span>
+            <h1>Text Analyzer</h1>
+            <p class="subtitle">Paste job/internship text for instant AI scam detection</p>
+        </section>
+
+        <div class="card mt-4">
+            <form id="textAnalyzerForm">
+                <div class="tabs">
+                    <button type="button" class="tab active" data-type="job">Job</button>
+                    <button type="button" class="tab" data-type="internship">Internship</button>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="jobText">📝 Paste Description or Recruitment Message</label>
+                    <textarea 
+                        id="jobText" 
+                        name="text" 
+                        class="form-textarea"
+                        style="min-height: 250px;"
+                        placeholder="Paste the job/internship description or recruitment message here...
+
+Example suspicious text: 'Work from home! Earn $5000/week! Pay $299 registration. WhatsApp only. Act now!'
+
+Example legitimate text: 'Marketing Intern at TechCorp. Social media & content creation. $1000/month stipend. Apply via careers portal.'
+
+Minimum 50 characters required."
+                        required
+                        minlength="50"
+                    ></textarea>
+                    <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                        <span style="color: var(--text-muted); font-size: 0.875rem;">Min 50 characters</span>
+                        <span id="charCount" style="color: var(--text-muted); font-size: 0.875rem;">0</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    🔍 Analyze for Scams
+                </button>
+            </form>
+        </div>
+
+        <div id="loadingSpinner" class="hidden" style="text-align: center; margin: 2rem 0;">
+            <div class="loading"></div>
+            <p style="margin-top: 1rem; color: var(--text-secondary);">Analyzing text with NLP...</p>
+        </div>
+
+        <div id="results" class="hidden">
+            <!-- Dynamic results -->
+        </div>
+
+        <section class="features-section">
+            <h2 class="section-title">Detection Categories</h2>
+            <div class="grid grid-3">
+                <div class="card">
+                    <h3>💳 Payment Requests</h3>
+                    <p>Registration fees & deposits</p>
+                </div>
+                <div class="card">
+                    <h3>🎯 Unrealistic Promises</h3>
+                    <p>Guaranteed income & quick money</p>
+                </div>
+                <div class="card">
+                    <h3>⚡ Urgency Tactics</h3>
+                    <p>Limited spots & pressure</p>
+                </div>
+                <div class="card">
+                    <h3>📧 Suspicious Contacts</h3>
+                    <p>Personal emails & WhatsApp</p>
+                </div>
+                <div class="card">
+                    <h3>📝 Vague Details</h3>
+                    <p>Unclear responsibilities</p>
+                </div>
+                <div class="card">
+                    <h3>🏢 Company Issues</h3>
+                    <p>Missing verification</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 AI Scam Detection | NLP Analysis</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/text_analyzer.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/theme-switcher.js') }}"></script>
+</body>
+</html>
