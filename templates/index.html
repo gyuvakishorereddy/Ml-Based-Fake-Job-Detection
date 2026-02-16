@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Scam Detection System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cyber_style.css') }}">
+</head>
+<body>
+    <!-- Floating Orbs Background -->
+    <div class="floating-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+        <div class="orb orb-5"></div>
+    </div>
+    
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="nav-brand">🛡️ Scam Guardian</a>
+            <ul class="nav-links">
+                <li><a href="/" class="active">Home</a></li>
+                <li><a href="/text-analyzer">Text Analyzer</a></li>
+                <li><a href="/job-detection">Job Analysis</a></li>
+                <li><a href="/internship-detection">Internship Analysis</a></li>
+            </ul>
+            <div style="position: relative;">
+                <button class="theme-toggle">
+                    <span class="theme-icon">🌙</span>
+                    <span class="theme-text">Dark</span>
+                </button>
+                <div class="theme-dropdown">
+                    <button class="theme-option active" data-theme="dark">🌙 Dark</button>
+                    <button class="theme-option" data-theme="light">☀️ Light</button>
+                    <button class="theme-option" data-theme="black">🌑 Black</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <span class="badge">🔒 AI-Powered Protection</span>
+            <h1>Fake Job & Internship Scam Detection</h1>
+            <p class="subtitle">
+                Protect yourself from recruitment fraud with AI and NLP
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                <a href="/text-analyzer" class="btn btn-primary">🔍 Analyze Text</a>
+                <a href="/job-detection" class="btn btn-outline">📊 Job Analysis</a>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value primary">98.5%</div>
+                <div class="stat-label">Accuracy</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value secondary">8</div>
+                <div class="stat-label">ML Models</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value success">Real-time</div>
+                <div class="stat-label">Analysis</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value warning">68+</div>
+                <div class="stat-label">Indicators</div>
+            </div>
+        </div>
+
+        <section class="features-section">
+            <h2 class="section-title">Key Features</h2>
+            <div class="grid grid-3">
+                <div class="card">
+                    <div class="card-icon">🔍</div>
+                    <h3>Text Analysis</h3>
+                    <p>NLP-powered analysis detecting payment requests, unrealistic claims, and suspicious patterns</p>
+                    <a href="/text-analyzer" class="btn btn-primary mt-2">Launch</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h3>Job Verification</h3>
+                    <p>Multi-model ensemble with XGBoost, CatBoost, and Random Forest</p>
+                    <a href="/job-detection" class="btn btn-secondary mt-2">Verify</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🎓</div>
+                    <h3>Internship Guard</h3>
+                    <p>Specialized scam detection protecting students from predatory practices</p>
+                    <a href="/internship-detection" class="btn btn-secondary mt-2">Check</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Scam Indicators</h3>
+                    <p>Detects payment requests, vague language, personal emails, and red flags</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🎯</div>
+                    <h3>Risk Scoring</h3>
+                    <p>Classification into Genuine, Suspicious, or Fake with 0-100 scores</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📋</div>
+                    <h3>Explainable AI</h3>
+                    <p>Clear explanations with actionable safety recommendations</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <h2 class="section-title">Detection Pipeline</h2>
+            <div class="grid grid-3">
+                <div class="card">
+                    <h3>1️⃣ Input</h3>
+                    <p>Paste job text or enter details</p>
+                </div>
+                <div class="card">
+                    <h3>2️⃣ NLP Scan</h3>
+                    <p>Analyzes keywords and patterns</p>
+                </div>
+                <div class="card">
+                    <h3>3️⃣ ML Models</h3>
+                    <p>8 models vote on prediction</p>
+                </div>
+                <div class="card">
+                    <h3>4️⃣ Risk Score</h3>
+                    <p>Combines NLP and ML results</p>
+                </div>
+                <div class="card">
+                    <h3>5️⃣ Report</h3>
+                    <p>Detailed findings & indicators</p>
+                </div>
+                <div class="card">
+                    <h3>6️⃣ Decision</h3>
+                    <p>Make informed choices</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 AI Scam Detection | ML & NLP Powered</p>
+        </div>
+    </footer>
+    <script src="{{ url_for('static', filename='js/theme-switcher.js') }}"></script>
+</body>
+</html>
