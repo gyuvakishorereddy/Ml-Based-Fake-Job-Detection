@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Analysis | AI Scam Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cyber_style.css') }}">
+</head>
+<body>
+    <!-- Floating Orbs Background -->
+    <div class="floating-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+        <div class="orb orb-5"></div>
+    </div>
+    
+    <nav class="navbar">
+        <div class="container">
+            <a href="/" class="nav-brand">🛡️ Scam Guardian</a>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/text-analyzer">Text Analyzer</a></li>
+                <li><a href="/job-detection">Job Analysis</a></li>
+                <li><a href="/internship-detection" class="active">Internship Analysis</a></li>
+            </ul>
+            <div style="position: relative;">
+                <button class="theme-toggle">
+                    <span class="theme-icon">🌙</span>
+                    <span class="theme-text">Dark</span>
+                </button>
+                <div class="theme-dropdown">
+                    <button class="theme-option active" data-theme="dark">🌙 Dark</button>
+                    <button class="theme-option" data-theme="light">☀️ Light</button>
+                    <button class="theme-option" data-theme="black">🌑 Black</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <span class="badge">🎓 Internship Guard</span>
+            <h1>Internship Analysis</h1>
+            <p class="subtitle">Scam detection for student internships</p>
+        </section>
+
+        <div class="card mt-4">
+            <form id="internshipForm" method="post" action="javascript:void(0)">
+                <div class="grid grid-2">
+                    <div class="form-group">
+                        <label class="form-label" for="company_registered">🏢 Company Registered?</label>
+                        <select class="form-select" id="company_registered" name="company_registered" required>
+                            <option value="0">No / Unknown</option>
+                            <option value="1" selected>Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="official_email">📧 Official Email Domain?</label>
+                        <select class="form-select" id="official_email" name="official_email" required>
+                            <option value="0">Personal Email (Gmail, Yahoo)</option>
+                            <option value="1" selected>Company Domain</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="website_available">🌐 Company Website?</label>
+                        <select class="form-select" id="website_available" name="website_available" required>
+                            <option value="0">No Website</option>
+                            <option value="1" selected>Has Website</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="social_media_presence">📱 Social Media Presence?</label>
+                        <select class="form-select" id="social_media_presence" name="social_media_presence" required>
+                            <option value="0">No Social Media</option>
+                            <option value="1" selected>Active Social Media</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="registration_fee">💳 Registration Fee Required?</label>
+                        <select class="form-select" id="registration_fee" name="registration_fee" required>
+                            <option value="0" selected>No Fee</option>
+                            <option value="1">Fee Required ⚠️</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="certificate_provided">📜 Completion Certificate?</label>
+                        <select class="form-select" id="certificate_provided" name="certificate_provided" required>
+                            <option value="0">No Certificate</option>
+                            <option value="1" selected>Certificate Provided</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="stipend_provided">💰 Stipend Offered?</label>
+                        <select class="form-select" id="stipend_provided" name="stipend_provided" required>
+                            <option value="0">No Stipend</option>
+                            <option value="1" selected>Stipend Provided</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="duration_weeks">⏱️ Duration (Weeks)</label>
+                        <input class="form-input" type="number" id="duration_weeks" name="duration_weeks" value="12" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="training_provided">🎯 Training Provided?</label>
+                        <select class="form-select" id="training_provided" name="training_provided" required>
+                            <option value="0">No Training</option>
+                            <option value="1" selected>Training Provided</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="mentor_assigned">👨‍🏫 Mentor Assigned?</label>
+                        <select class="form-select" id="mentor_assigned" name="mentor_assigned" required>
+                            <option value="0">No Mentor</option>
+                            <option value="1" selected>Mentor Assigned</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                    🤖 Run AI Analysis
+                </button>
+            </form>
+        </div>
+
+        <div id="loadingSpinner" class="hidden" style="text-align: center; margin: 2rem 0;">
+            <div class="loading"></div>
+            <p style="margin-top: 1rem; color: var(--text-secondary);">Analyzing internship offer...</p>
+        </div>
+
+        <div id="results" class="hidden">
+            <!-- Dynamic results -->
+        </div>
+
+        <section class="features-section">
+            <h2 class="section-title">ML Models</h2>
+            <div class="grid grid-3">
+                <div class="card">
+                    <h3>SVM</h3>
+                    <p>Support Vector Machine for classification</p>
+                </div>
+                <div class="card">
+                    <h3>Random Forest</h3>
+                    <p>Ensemble trees for accurate detection</p>
+                </div>
+                <div class="card">
+                    <h3>XGBoost</h3>
+                    <p>Gradient boosting for prediction</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <h2 class="section-title">Red Flags</h2>
+            <div class="grid grid-2">
+                <div class="alert alert-danger">
+                    <strong>🚫 Registration Fees</strong><br>
+                    Legitimate internships never charge fees
+                </div>
+                <div class="alert alert-danger">
+                    <strong>📧 Personal Email</strong><br>
+                    Use of Gmail, Yahoo instead of company domain
+                </div>
+                <div class="alert alert-warning">
+                    <strong>🌐 No Online Presence</strong><br>
+                    Missing website or social media
+                </div>
+                <div class="alert alert-warning">
+                    <strong>📝 Vague Details</strong><br>
+                    Unclear work description
+                </div>
+            </div>
+        </section>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 AI Scam Detection | Student Protection</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/internship_detection.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/theme-switcher.js') }}"></script>
+</body>
+</html>
