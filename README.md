@@ -1,9 +1,10 @@
 # 🛡️ AI-Based Fake Job & Internship Scam Detection System
 
-## Cybersecurity Domain | Machine Learning | NLP
+## Cybersecurity Domain | Machine Learning | NLP | React + Flask
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
 [![Flask](https://img.shields.io/badge/Flask-2.3+-green.svg)](https://flask.palletsprojects.com/)
+[![React](https://img.shields.io/badge/React-18.2+-61DAFB.svg)](https://reactjs.org/)
 [![ML](https://img.shields.io/badge/ML-Ensemble-orange.svg)](https://scikit-learn.org/)
 [![NLP](https://img.shields.io/badge/NLP-Powered-purple.svg)](https://www.nltk.org/)
 
@@ -11,19 +12,49 @@
 
 ## 🚀 Quick Start
 
+### Prerequisites
+- Python 3.8+
+- Node.js 16+
+- npm or yarn
+
+### Backend Setup (Flask API)
+
 ```bash
-# 1. Install dependencies
+# 1. Navigate to project root
+cd "Manoj Project"
+
+# 2. Create and activate virtual environment (Optional but recommended)
+python -m venv venv
+.\venv\Scripts\Activate.ps1  # Windows
+# source venv/bin/activate  # Linux/Mac
+
+# 3. Install Python dependencies
 pip install -r requirements.txt
 
-# 2. Train ML models (one-time setup)
+# 4. Train ML models (one-time setup)
 python train_models.py
 
-# 3. Run the application
+# 5. Start Flask API server
 python app.py
-
-# 4. Open browser
-# Navigate to: http://localhost:5000
+# API will run at: http://localhost:5000/api
 ```
+
+### Frontend Setup (React)
+
+```bash
+# 1. Navigate to frontend directory
+cd frontend
+
+# 2. Install Node dependencies
+npm install
+
+# 3. Start React development server
+npm run dev
+# App will run at: http://localhost:3000
+```
+
+### Access the Application
+Open your browser and navigate to: **http://localhost:3000**
 
 ---
 
@@ -33,71 +64,61 @@ python app.py
 🤖 **8 ML Models** - Ensemble learning with XGBoost, CatBoost, Random Forest, SVM  
 📊 **Risk Scoring** - 0-100 risk scores with 3-tier categorization (Genuine/Suspicious/Fake)  
 💡 **Explainable AI** - Detailed scam indicators and explanations  
-🎨 **Cybersecurity UI** - Extraordinary dark theme with neon accents  
-📱 **Responsive Design** - Works on all devices  
+🎨 **Modern React UI** - Dynamic SPA with theme switching (Dark/Light/Black)  
+📱 **Responsive Design** - Works seamlessly on all devices  
+⚡ **Real-time Analysis** - Instant predictions with API integration
 
 ---
 
-## 🎯 Problem Statement
+## 🏗️ Architecture
 
-Online job and internship scams are rising. Many users can't easily identify fake offers. This AI-based system detects scams and warns users to prevent fraud, data misuse, and promotes safer job searching.
+### Frontend (React)
+- **Framework:** React 18 with Vite
+- **Routing:** React Router v6
+- **HTTP Client:** Axios
+- **UI Components:** Custom components with Lucide icons
+- **Styling:** CSS3 with CSS variables for theming
+- **State Management:** React Context API
 
----
+### Backend (Flask API)
+- **Framework:** Flask 2.3+
+- **API:** RESTful JSON API
+- **CORS:** Flask-CORS for cross-origin requests
+- **ML Models:** Scikit-learn, XGBoost, CatBoost
+- **NLP:** NLTK, custom text analyzer
 
-## 🔍 What We Detect
-
-- 💳 **Payment Requests** - Registration fees, deposits, upfront payments
-- 🎯 **Unrealistic Promises** - Guaranteed income, get-rich-quick schemes  
-- ⚡ **Urgency Tactics** - Limited time offers, pressure techniques
-- 📧 **Suspicious Contacts** - Personal emails, WhatsApp-only communication
-- 📝 **Vague Descriptions** - Lack of specific job details
-- 🏢 **Company Credibility** - Missing verification, poor online presence
-
----
-
-## 🛠️ Technologies
-
-**Backend:** Flask, Python, scikit-learn, XGBoost, CatBoost  
-**NLP:** NLTK, TextBlob, Regular Expressions  
-**Frontend:** HTML5, CSS3, Vanilla JavaScript  
-**ML Models:** Random Forest, XGBoost, CatBoost, SVM, Gradient Boosting, Decision Tree  
-
----
-
-## 📊 System Performance
-
-- **Accuracy:** 98.5%+
-- **Models:** 8 trained models (5 job + 3 internship)
-- **Detection:** 68+ scam keywords across 5 categories
-- **Risk Scoring:** Multi-factor analysis
-- **Response Time:** Real-time
-
----
-
-## 🎨 UI Preview
-
-**Cybersecurity Theme:**
-- Dark mode with neon cyan, purple, and red accents
-- Animated grid backgrounds
-- Glowing effects and smooth transitions
-- Risk meters and visual indicators
-- Modern typography (Space Grotesk, JetBrains Mono)
-
----
-
-## 📖 Usage
-
-### Option 1: Text Analyzer (Recommended)
-1. Navigate to **Text Analyzer**
-2. Paste job description or recruitment message
-3. Click "Analyze Text for Scams"
-4. Review risk score, indicators, and recommendations
-
-### Option 2: Feature-Based Analysis
-1. Go to **Job Analysis** or **Internship Analysis**
-2. Fill in structured data fields
-3. Submit for ensemble prediction
-4. View model breakdown and results
+### Project Structure
+```
+Manoj Project/
+├── app.py                      # Flask API server
+├── nlp_analyzer.py            # NLP text analysis engine
+├── train_models.py            # ML model training script
+├── config.py                  # Configuration
+├── requirements.txt           # Python dependencies
+├── models/                    # Trained ML models
+├── frontend/                  # React application
+│   ├── src/
+│   │   ├── components/       # Reusable UI components
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   └── FloatingOrbs.jsx
+│   │   ├── pages/           # Page components
+│   │   │   ├── Home.jsx
+│   │   │   ├── TextAnalyzer.jsx
+│   │   │   ├── JobDetection.jsx
+│   │   │   └── InternshipDetection.jsx
+│   │   ├── services/        # API service layer
+│   │   │   └── api.js
+│   │   ├── contexts/        # React contexts
+│   │   │   └── ThemeContext.jsx
+│   │   ├── App.jsx          # Main app component
+│   │   └── main.jsx         # Entry point
+│   ├── package.json
+│   └── vite.config.js
+└── datasets/
+    ├── jobs_dataset.csv
+    └── internships_dataset.csv
+```
 
 ---
 
