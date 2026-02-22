@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 import joblib
 import numpy as np
 import pandas as pd
@@ -9,6 +10,15 @@ from nlp_analyzer import ScamTextAnalyzer
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
+
+# Enable CORS for React frontend
+CORS(app, resources={
+    r"/api/*": {
+        "origins": ["http://localhost:3000", "http://127.0.0.1:3000"],
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type"]
+    }
+})
 
 # Initialize NLP analyzer
 nlp_analyzer = ScamTextAnalyzer()
@@ -43,23 +53,7 @@ def load_models():
 
 models = load_models()
 
-# Routes
-@app.route('/')
-def home():
-    return render_template('index.html')
-
-@app.route('/job-detection')
-def job_detection():
-    return render_template('job_detection.html')
-
-@app.route('/internship-detection')
-def internship_detection():
-    return render_template('internship_detection.html')
-
-@app.route('/text-analyzer')
-def text_analyzer():
-    return render_template('text_analyzer.html')
-
+# API Routes
 @app.route('/api/predict-job', methods=['POST'])
 def predict_job():
     """Predict if job is real or fraudulent"""
@@ -456,12 +450,13 @@ def _generate_recommendation(category, risk_score):
     
     return recommendations.get(category, [])
 
-@app.route('/api/health')
+@app.route('/api/health', methods=['GET'])
 def health():
     return jsonify({
         'status': 'healthy',
         'models_loaded': len(models) > 0,
-        'nlp_analyzer': 'active'
+        'nlp_analyzer': 'active',
+        'available_models': list(models.keys())
     })
 
 @app.errorhandler(404)
@@ -473,8 +468,15 @@ def internal_error(error):
     return jsonify({'error': 'Internal server error'}), 500
 
 if __name__ == '__main__':
+    # Ensure required directories exist
     os.makedirs('models', exist_ok=True)
-    os.makedirs('templates', exist_ok=True)
-    os.makedirs('static/css', exist_ok=True)
-    os.makedirs('static/js', exist_ok=True)
+    
+    print("=" * 50)
+    print("🚀 Starting Flask API Server")
+    print("=" * 50)
+    print(f"API URL: http://localhost:5000/api")
+    print(f"Health Check: http://localhost:5000/api/health")
+    print(f"Models Loaded: {len(models)}")
+    print("=" * 50)
+    
     app.run(debug=True, host='0.0.0.0', port=5000)
