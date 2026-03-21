@@ -1,0 +1,83 @@
+.internship-detection-page {
+  padding: 2rem 0;
+}
+
+.results-card {
+  animation: slideIn 0.3s ease;
+}
+
+.ensemble-result {
+  text-align: center;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-lg);
+}
+
+.confidence-display {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 1rem;
+  color: var(--text-primary);
+}
+
+.vote-breakdown {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+}
+
+.vote-breakdown h3 {
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.vote-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.vote-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+}
+
+.vote-label {
+  color: var(--text-secondary);
+}
+
+.vote-value {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+.vote-value.danger {
+  color: var(--cyber-danger);
+}
+
+.vote-value.success {
+  color: var(--cyber-success);
+}
+
+.text-danger {
+  color: var(--cyber-danger);
+  font-weight: 600;
+}
+
+.text-success {
+  color: var(--cyber-success);
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .internship-detection-page .grid {
+    grid-template-columns: 1fr;
+  }
+}
