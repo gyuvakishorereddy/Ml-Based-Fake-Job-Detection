@@ -1,0 +1,12 @@
+.home-page {
+  padding-bottom: 2rem;
+}
+
+.pipeline-step {
+  text-align: center;
+}
+
+.pipeline-step h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
